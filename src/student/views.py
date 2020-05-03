@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from student.models import Student
 
 
-def generate_students(request, N):
+def generate_students(request):
 	n = request.GET.get('N')
     if isinstance(n, int):
         return HttpResponse('\n'.join([Student.generate_student() for _ in range(n)]))
