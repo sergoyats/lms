@@ -38,7 +38,7 @@ def students_add(request):
     last_name = request.POST.get('lname')
     email = request.POST.get("email")
     telephone = request.POST.get("tel")
-    qs1 = qs.filter(Q(fname=first_name) & Q(lname=last_name) & Q(email=email) | Q(tel=telephone))
+    qs1 = qs.filter(Q(fname=first_name) & Q(lname=last_name) & (Q(email=email) | Q(tel=telephone)))
 
     if request.method == 'POST':
         form = StudentAddForm(request.POST)
