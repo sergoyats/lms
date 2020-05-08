@@ -42,11 +42,14 @@ def teachers_add(request):
 
     if request.method == 'POST':
         form = TeacherAddForm(request.POST)
-        if form.is_valid() and (qs1 in qs):
-            form.save()
-            return HttpResponseRedirect(reverse('teachers'))
+		
+		if qs1 in qs:
+			return HttpResponse(409, 'Conflict: This teacher is already in the database.')
         else:
-            return HttpResponse('This teacher is already in the database.')
+			if form.is_valid():
+				form.save()
+				return HttpResponseRedirect(reverse('teachers'))
+            
     else:
         form = TeacherAddForm()
 
