@@ -43,8 +43,8 @@ def students_add(request):
     if request.method == 'POST':
         form = StudentAddForm(request.POST)
 		
-		if qs1 in qs:
-			return HttpResponse(409, 'Conflict: This student is already in the database.')
+		if qs1.exists():
+			return HttpResponse('This student is already in the database.', status=409)
         else:
 			if form.is_valid:
 				form.save()
