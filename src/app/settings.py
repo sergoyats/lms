@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'student',
     'teacher',
-	'group',
+    'group',
     'django_extensions',
 ]
 
