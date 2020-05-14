@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Teachers list</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
 
     <form>
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname"><br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="lname"><br>
-        <label for="tel">Telephone:</label><br>
-        <input type="text" id="tel" name="tel">
-        <button type="submit">Search</button>
+      <label for="fname">First name:</label><br>
+      <input type="text" id="fname" name="fname"><br>
+      <label for="lname">Last name:</label><br>
+      <input type="text" id="lname" name="lname">
+      <button type="submit">Search</button>
     </form>
 
-{{ teachers_list|safe }}
+    {% for teacher in teachers_list %}
+        {{ teacher.id }}
+        <a href="/teachers/edit/{{ teacher.id }}">{{ teacher.first_name }} {{ teacher.last_name }}</a>
+        {{ teacher.telephone }}
+        <br>
+    {% empty %}
+        <p>Sorry, list is empty</p>
+    {% endfor %}
 
-</body>
-</html>
+{% endblock %}

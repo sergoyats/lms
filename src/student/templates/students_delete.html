@@ -1,5 +1,3 @@
-{% extends 'base.html' %}
-
 {% block content %}
 
     <form>
@@ -18,5 +16,10 @@
     {% empty %}
         <p>Sorry, list is empty</p>
     {% endfor %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+      <button type="submit"><a href="/students/delete/{{ student.id }}">Delete</a></button>
+    </form>
 
 {% endblock %}
