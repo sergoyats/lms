@@ -14,7 +14,7 @@ def groups_list(request):
     course = request.GET.get('course')
     number = request.GET.get('number')
 
-    if name or specialty or number:
+    if name or course or number:
         qs = qs.filter(Q(name=name) | Q(course=course) | Q(number=number))
 
     result = '<br>'.join(str(group) for group in qs)

@@ -18,14 +18,13 @@ def generate_students(request):
 
 def students_list(request):
     qs = Student.object.all()
-    first_name = request.GET.get('fname')
-    last_name = request.GET.get('lname')
+    first_name = request.GET.get('first_name')
+    last_name = request.GET.get('last_name')
     email = request.GET.get("email")
 
     if first_name or last_name or email:
-        qs = qs.filter(Q(fname=first_name) | Q(lname=last_name) | Q(email=email))
-
-    result = '<br>'.join(str(student) for student in qs)
+        qs = qs.filter(Q(first_name=first_name) | Q(last_name=last_name) | Q(email=email))
+    result = qs
 
     return render(request=request,
                   template_name='students_list.html',
@@ -35,11 +34,11 @@ def students_list(request):
 
 def students_add(request):
     qs = Student.object.all()
-    first_name = request.POST.get('fname')
-    last_name = request.POST.get('lname')
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
     email = request.POST.get("email")
-    telephone = request.POST.get("tel")
-    qs1 = qs.filter(Q(fname=first_name) & Q(lname=last_name) & (Q(email=email) | Q(tel=telephone)))
+    tel = request.POST.get("tel")
+    qs1 = qs.filter(Q(first_name=first_name) & Q(last_name=last_name) & (Q(email=email) | Q(tel=tel)))
 
     if request.method == 'POST':
         form = StudentAddForm(request.POST)

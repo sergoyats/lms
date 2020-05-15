@@ -7,7 +7,7 @@ class Teacher(models.Model):
     first_name = models.CharField(max_length=15, null=False)
     last_name = models.CharField(max_length=30, null=False)
     email = models.EmailField(max_length=20, null=True)
-    telephone = models.CharField(max_length=20, default=380966666666, unique=True, null=False)
+    telephone = models.CharField(max_length=20, default=None, unique=True, null=True)
     github_repository = models.URLField(max_length=100, null=True)
     experience = models.PositiveIntegerField(default=2, null=False)
 

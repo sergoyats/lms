@@ -18,14 +18,13 @@ def generate_teachers(request):
 
 def teachers_list(request):
     qs = Teacher.object.all()
-    first_name = request.GET.get('fname')
-    last_name = request.GET.get('lname')
-    telephone = request.GET.get('tel')
+    first_name = request.GET.get('first_name')
+    last_name = request.GET.get('last_name')
+    tel = request.GET.get('tel')
 
-    if first_name or last_name or telephone:
-        qs = qs.filter(Q(fname=first_name) | Q(lname=last_name) | Q(tel=telephone))
-
-    result = '<br>'.join(str(teacher) for teacher in qs)
+    if first_name or last_name or tel:
+        qs = qs.filter(Q(first_name=first_name) | Q(last_name=last_name) | Q(tel=tel))
+    result = qs
 
     return render(request=request,
                   template_name='teachers_list.html',
@@ -35,11 +34,11 @@ def teachers_list(request):
 
 def teachers_add(request):
     qs = Teacher.object.all()
-    first_name = request.POST.get('fname')
-    last_name = request.POST.get('lname')
+    first_name = request.POST.get('first_name')
+    last_name = request.POST.get('last_name')
     email = request.POST.get("email")
-    telephone = request.POST.get("tel")
-    qs1 = qs.filter(Q(fname=first_name) & Q(lname=last_name) & (Q(email=email) | Q(tel=telephone)))
+    tel = request.POST.get("tel")
+    qs1 = qs.filter(Q(first_name=first_name) & Q(last_name=last_name) & (Q(email=email) | Q(tel=tel)))
 
     if request.method == 'POST':
         form = TeacherAddForm(request.POST)
