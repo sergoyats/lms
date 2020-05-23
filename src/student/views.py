@@ -17,7 +17,7 @@ def generate_students(request):
 
 
 def students_list(request):
-    qs = Student.object.all()
+    qs = Student.object.all().select_related('group')
     first_name = request.GET.get('first_name')
     last_name = request.GET.get('last_name')
     email = request.GET.get("email")

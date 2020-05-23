@@ -15,7 +15,8 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from django.conf import settings
 from student.views import students_list, generate_students, students_add, students_edit, students_delete
 from teacher.views import teachers_list, generate_teachers, teachers_add, teachers_edit
 from group.views import groups_list, groups_add, groups_edit
@@ -36,3 +37,10 @@ urlpatterns = [
     path('groups/edit/<int:id>', groups_edit),
     path('', admin.site.urls),
 ]
+
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

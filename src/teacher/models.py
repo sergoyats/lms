@@ -24,7 +24,7 @@ class Teacher(models.Model):
             first_name=faker.first_name(),
             last_name=faker.last_name(),
             email=faker.email(),
-            telephone=faker.phone_number(),
+            telephone=faker.phone_number()
         )
 
         teacher.save()

@@ -3,11 +3,16 @@ from student.models import Student
 
 
 class Command(BaseCommand):
-    help = u'Generate N fake students'
+    help = u'Generate students'
 
     def add_arguments(self, parser):
-        parser.add_argument('N', type=int, help=u'The number of fake students.')
+        parser.add_argument('num_students', default=100, type=int)
 
     def handle(self, *args, **kwargs):
-        for _ in range(kwargs['N']):
+        num_students = kwargs['num_students']
+        Student.objects.all().delete()
+
+        for _ in range(num_students):
             Student.generate_student()
+
+        self.stdout.write(self.style.SUCCESS(f'Successfully generated {num_students} students'))
