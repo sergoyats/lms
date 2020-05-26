@@ -15,3 +15,7 @@ class TeacherAddForm(TeacherBaseForm):
 
 class TeacherEditForm(TeacherBaseForm):
     pass
+
+
+class TeacherDeleteForm(TeacherBaseForm):
+    pass

@@ -17,25 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
-from student.views import students_list, generate_students, students_add, students_edit, students_delete
-from teacher.views import teachers_list, generate_teachers, teachers_add, teachers_edit
-from group.views import groups_list, groups_add, groups_edit
+
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
-    path('generate_students/', generate_students),
-    path('generate_teachers/', generate_teachers),
-    path('students/', students_list, name='students'),
-    path('teachers/', teachers_list, name='teachers'),
-    path('groups/', groups_list, name='groups'),
-    path('students/add', students_add),
-    path('teachers/add', teachers_add),
-    path('groups/add', groups_add),
-    path('students/edit/<int:id>', students_edit),
-    path('students/delete/<int:id>', students_delete),
-    path('teachers/edit/<int:id>', teachers_edit),
-    path('groups/edit/<int:id>', groups_edit),
+    path('admin/', admin.site.urls),
     path('', admin.site.urls),
+    path('students/', include('student.urls')),
+    path('groups/', include('group.urls')),
+    path('teachers/', include('teacher.urls'))
 ]
 
 

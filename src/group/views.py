@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect, HttpResponseNotFound
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Q
 
-from group.forms import GroupAddForm, GroupEditForm
+from group.forms import GroupAddForm, GroupEditForm, GroupDeleteForm
 from group.models import Group
 
 
@@ -61,3 +62,47 @@ def groups_edit(request, id):
         template_name='groups_edit.html',
         context={'form': form, 'title': 'Group edit'}
     )
+
+
+class GroupsListView(ListView):
+    model = Group
+    template_name = 'groups_list.html'
+    context_object_name = 'groups_list'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.select_related('teacher')
+        qs = qs.order_by('-id')
+        return qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Group list'
+        return context
+
+
+class GroupsUpdateView(UpdateView):
+    model = Group
+    template_name = 'groups_edit.html'
+    form_class = GroupEditForm
+
+    def get_success_url(self):
+        return reverse('groups:list')
+
+
+class GroupsCreateView(CreateView):
+    model = Group
+    template_name = 'groups_add.html'
+    form_class = GroupAddForm
+
+    def get_success_url(self):
+        return reverse('groups:list')
+
+
+class GroupDeleteView(DeleteView):
+    model = Group
+    template_name = 'groups_delete.html'
+    form_class = GroupDeleteForm
+
+    def get_success_url(self):
+        return reverse('groups:list')

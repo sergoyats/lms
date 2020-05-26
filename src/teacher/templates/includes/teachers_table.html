@@ -16,8 +16,8 @@
               <td> {{ teacher.last_name }}</td>
               <td> {{ teacher.email }}</td>
               <td> {{ teacher.telephone }}</td>
-              <td> <a href="/teachers/edit/{{ teacher.id }}">EDIT</a></td>
-              <td> <a href="/teachers/delete/{{ teacher.id }}">DEL</a></td>
+              <td> <a href="{% url 'teachers:edit' teacher.id %}">EDIT</a></td>
+              <td> <a href="{% url 'teachers:delete' teacher.id %}">DELETE</a></td>
             </tr>
         {% endfor %}
     </table>
