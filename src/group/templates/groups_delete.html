@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
     <form method="post">
         {% csrf_token %}
-       <p>
-            <b> {{ student.full_name }} </b>will be deleted!
+        <p>
+            <b> {{ group.name }} </b>will be deleted!
         </p>
 
       <button type="submit">Delete</button>
-      <a  href="{% url 'students:list' %}">Cancel</a>
+      <a  href="{% url 'groups:list' %}">Cancel</a>
     </form>
-
 {% endblock %}

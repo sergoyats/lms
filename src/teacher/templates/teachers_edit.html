@@ -6,6 +6,7 @@
         {% csrf_token %}
         {{ form.as_p }}
       <button type="submit">Save</button>
+      <button formaction="{% url 'teachers:list' %}" type="submit">Cancel</button>
     </form>
 
 {% endblock %}

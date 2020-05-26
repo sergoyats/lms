@@ -16,8 +16,8 @@
               <td> {{ student.last_name }}</td>
               <td> {{ student.email }}</td>
               <td> {{ student.group }}</td>
-              <td> <a href="/students/edit/{{ student.id }}">EDIT</a></td>
-              <td> <a href="/students/delete/{{ student.id }}">DEL</a></td>
+              <td> <a href="{% url 'students:edit' student.id %}">EDIT</a></td>
+              <td> <a href="{% url 'students:delete' student.id %}">DELETE</a></td>
             </tr>
         {% endfor %}
     </table>

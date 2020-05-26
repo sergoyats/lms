@@ -14,9 +14,8 @@
               <td> {{ group.name }}</td>
               <td> {{ group.students_number }}</td>
               <td> {{ group.teacher }}</td>
-              <td> <a href="/groups/edit/{{ student.id }}">EDIT</a></td>
-              <td> <a href="/groups/delete/{{ student.id }}">DEL</a></td>
-            </tr>
+              <td> <a href="{% url 'groups:edit'  group.id %}">EDIT</a></td>
+              <td> <a href="{% url 'groups:delete'  group.id %}">DEL</a></td>
         {% endfor %}
     </table>
 {% else %}

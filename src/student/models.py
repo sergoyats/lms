@@ -20,13 +20,18 @@ class Student(models.Model):
         related_name='students'
     )
 
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}, email: {self.email}, tel.: {self.telephone}'
 
     @classmethod
-    def generate_student(cls):
-        groups = list(Group.objects.all())
+    def generate_student(cls, groups=None):
         faker = Faker()
+        if groups is None:
+            groups = list(Group.objects.all())
+
         student = cls(
             first_name=faker.first_name(),
             last_name=faker.last_name(),

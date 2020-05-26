@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from django.urls import reverse
@@ -99,3 +100,47 @@ def students_delete(request, id):
         template_name='students_delete.html',
         context={'form': form, 'title': 'Student delete'}
     )
+
+
+class StudentsListView(ListView):
+    model = Student
+    template_name = 'students_list.html'
+    context_object_name = 'students_list'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.select_related('group')
+        qs = qs.order_by('-id')
+        return qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Student list'
+        return context
+
+
+class StudentsUpdateView(UpdateView):
+    model = Student
+    template_name = 'students_edit.html'
+    form_class = StudentEditForm
+
+    def get_success_url(self):
+        return reverse('students:list')
+
+
+class StudentsCreateView(CreateView):
+    model = Student
+    template_name = 'students_add.html'
+    form_class = StudentAddForm
+
+    def get_success_url(self):
+        return reverse('students:list')
+
+
+class StudentsDeleteView(DeleteView):
+    model = Student
+    template_name = 'students_delete.html'
+    pk_url_kwarg = 'id'
+
+    def get_success_url(self):
+        return reverse('students:list')

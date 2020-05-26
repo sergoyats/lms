@@ -13,11 +13,6 @@
         <button type="submit">Search</button>
     </form>
 
-{% for group in groups_list %}
-    {{group.id}}
-    <a href="/groups/edit/{{ group.id }}">{{group.name}} {{group.course}} {{ group.number }}</a>
-    <br>
-
-{% endfor %}
+    {% include 'includes/groups_table.html' %}
 
 {% endblock %}
