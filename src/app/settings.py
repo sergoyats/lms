@@ -25,7 +25,9 @@ SECRET_KEY = 'v2kvf=9#o#luaf!tj@tv+_o1k_#v(!cc(^t$@pi2phy7n6@q90'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['127.0.0.1']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'student',
     'teacher',
     'group',
+    'user_account',
 ]
 
 # Application definition
@@ -58,12 +61,14 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
+
 ROOT_URLCONF = 'app.urls'
+
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +80,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
@@ -135,6 +141,7 @@ INTERNAL_IPS = [
     # ...
 ]
 
+
 LOGGING = {
     'version': 1,
     'filters': {
@@ -156,3 +163,6 @@ LOGGING = {
         }
     }
 }
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django.core.exceptions import ValidationError
 
 from student.models import Student
 
@@ -14,8 +15,20 @@ class StudentAddForm(StudentBaseForm):
 
 
 class StudentEditForm(StudentBaseForm):
-    pass
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if Student.objects.all().filter(email=email).exists():
+            raise ValidationError('This email exists, create a unique one.')
+        return email
+
+    def clean_name(self):
+        name = self.cleaned_data
+        if name['first_name'] == name['last_name']:
+            raise ValidationError('First and last names are the same! This is unacceptable!')
+        return name
 
 
 class StudentDeleteForm(StudentBaseForm):
-    pass
+    class Meta(StudentBaseForm.Meta):
+        fields = []

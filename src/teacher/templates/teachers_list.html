@@ -3,11 +3,19 @@
 {% block content %}
 
     <form>
-      <label for="first_name">First name:</label><br>
-      <input type="text" id="first_name" name="first_name"><br>
-      <label for="last_name">Last name:</label><br>
-      <input type="text" id="last_name" name="last_name">
-      <button type="submit">Search</button>
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">First name</span>
+          </div>
+          <input  name="first_name" type="text" class="form-control" placeholder="First name" aria-label="first_name" aria-describedby="basic-addon1">
+
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Last name</span>
+          </div>
+          <input  name="last_name" type="text" class="form-control" placeholder="Last name" aria-label="last_name" aria-describedby="basic-addon1">
+
+          <button type="submit" class="btn btn-success">Search</button>
+        </div>
     </form>
 
     {% include 'includes/teachers_table.html' %}

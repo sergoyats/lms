@@ -21,7 +21,7 @@ def students_list(request):
     qs = Student.object.all().select_related('group')
     first_name = request.GET.get('first_name')
     last_name = request.GET.get('last_name')
-    email = request.GET.get("email")
+    email = request.GET.get('email')
 
     if first_name or last_name or email:
         qs = qs.filter(Q(first_name=first_name) | Q(last_name=last_name) | Q(email=email))
@@ -37,8 +37,8 @@ def students_add(request):
     qs = Student.object.all()
     first_name = request.POST.get('first_name')
     last_name = request.POST.get('last_name')
-    email = request.POST.get("email")
-    tel = request.POST.get("tel")
+    email = request.POST.get('email')
+    tel = request.POST.get('tel')
     qs1 = qs.filter(Q(first_name=first_name) & Q(last_name=last_name) & (Q(email=email) | Q(tel=tel)))
 
     if request.method == 'POST':
@@ -108,9 +108,14 @@ class StudentsListView(ListView):
     context_object_name = 'students_list'
 
     def get_queryset(self):
+        request = self.request
         qs = super().get_queryset()
         qs = qs.select_related('group')
         qs = qs.order_by('-id')
+
+        if request.GET.get('first_name') or request.GET.get('last_name'):
+            qs = qs.filter(Q(first_name=request.GET.get('first_name')) | Q(last_name=request.GET.get('last_name')))
+
         return qs
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -126,6 +131,11 @@ class StudentsUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('students:list')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Edit student'
+        return context
 
 
 class StudentsCreateView(CreateView):

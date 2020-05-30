@@ -3,13 +3,13 @@
 {% block content %}
 
     <form method="post">
-        {% csrf_token %}
-       <p>
+       {% csrf_token %}
+       <h3>
             <b> {{ student.full_name }} </b>will be deleted!
-        </p>
+       <h3>
 
-      <button type="submit">Delete</button>
-      <a  href="{% url 'students:list' %}">Cancel</a>
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a  href="{% url 'students:list' %}" class="btn btn-light">Cancel</a>
     </form>
 
 {% endblock %}
