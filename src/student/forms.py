@@ -22,7 +22,7 @@ class StudentEditForm(StudentBaseForm):
             raise ValidationError('This email exists, create a unique one.')
         return email
 
-    def clean_name(self):
+    def clean(self):
         name = self.cleaned_data
         if name['first_name'] == name['last_name']:
             raise ValidationError('First and last names are the same! This is unacceptable!')
