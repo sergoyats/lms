@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ block.super }}
 
     <form>
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name"><br>
-        <label for="course">Course:</label><br>
-        <input type="text" id="spec" name="spec"><br>
-        <label for="number">Students number:</label><br>
-        <input type="text" id="number" name="number">
-        <button type="submit">Search</button>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Name</span>
+          </div>
+          <input  name="name" type="text" class="form-control" placeholder="name" aria-label="first_name" aria-describedby="basic-addon1">
+
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Number of group</span>
+          </div>
+          <input  name="students_number" type="text" class="form-control" placeholder="students_number" aria-label="last_name" aria-describedby="basic-addon1">
+
+          <button type="submit" class="btn btn-success">Search</button>
+        </div>
     </form>
 
     {% include 'includes/groups_table.html' %}

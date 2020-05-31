@@ -12,6 +12,14 @@ class Classroom(models.Model):
     def __str__(self):
         return f'{self.name} - Floor #{self.floor}'
 
+    @classmethod
+    def generate_classroom(cls):
+        classroom = cls(
+            name=f'Classroom - {random.choice(range(5))}',
+            floor=random.choice(range(5))
+        )
+        classroom.save()
+
 
 class Group(models.Model):
     name = models.CharField(max_length=15, null=False)
