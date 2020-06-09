@@ -1,8 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render
-from django.urls import reverse
 from django.db.models import Q
 
 from student.forms import StudentAddForm, StudentEditForm
@@ -102,10 +103,12 @@ def students_delete(request, id):
     )
 
 
-class StudentsListView(ListView):
+class StudentsListView(LoginRequiredMixin, ListView):
     model = Student
     template_name = 'students_list.html'
     context_object_name = 'students_list'
+    login_url = reverse_lazy('login')
+    paginate_by = 20
 
     def get_queryset(self):
         request = self.request
@@ -124,10 +127,11 @@ class StudentsListView(ListView):
         return context
 
 
-class StudentsUpdateView(UpdateView):
+class StudentsUpdateView(LoginRequiredMixin, UpdateView):
     model = Student
     template_name = 'students_edit.html'
     form_class = StudentEditForm
+    login_url = reverse_lazy('login')
 
     def get_success_url(self):
         return reverse('students:list')
@@ -138,19 +142,21 @@ class StudentsUpdateView(UpdateView):
         return context
 
 
-class StudentsCreateView(CreateView):
+class StudentsCreateView(LoginRequiredMixin, CreateView):
     model = Student
     template_name = 'students_add.html'
     form_class = StudentAddForm
+    login_url = reverse_lazy('login')
 
     def get_success_url(self):
         return reverse('students:list')
 
 
-class StudentsDeleteView(DeleteView):
+class StudentsDeleteView(LoginRequiredMixin, DeleteView):
     model = Student
     template_name = 'students_delete.html'
     pk_url_kwarg = 'id'
+    login_url = reverse_lazy('login')
 
     def get_success_url(self):
         return reverse('students:list')

@@ -1,8 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import render
-from django.urls import reverse
 from django.db.models import Q
 
 from teacher.forms import TeacherAddForm, TeacherEditForm, TeacherDeleteForm
@@ -82,10 +83,12 @@ def teachers_edit(request, id):
     )
 
 
-class TeachersListView(ListView):
+class TeachersListView(LoginRequiredMixin, ListView):
     model = Teacher
     template_name = 'teachers_list.html'
     context_object_name = 'teachers_list'
+    login_url = reverse_lazy('login')
+    paginate_by = 20
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(object_list=None, **kwargs)
@@ -93,28 +96,31 @@ class TeachersListView(ListView):
         return context
 
 
-class TeachersUpdateView(UpdateView):
+class TeachersUpdateView(LoginRequiredMixin, UpdateView):
     model = Teacher
     template_name = 'teachers_edit.html'
     form_class = TeacherEditForm
+    login_url = reverse_lazy('login')
 
     def get_success_url(self):
         return reverse('teachers:list')
 
 
-class TeachersCreateView(CreateView):
+class TeachersCreateView(LoginRequiredMixin, CreateView):
     model = Teacher
     template_name = 'teachers_add.html'
     form_class = TeacherAddForm
+    login_url = reverse_lazy('login')
 
     def get_success_url(self):
         return reverse('teachers:list')
 
 
-class TeacherDeleteView(DeleteView):
+class TeacherDeleteView(LoginRequiredMixin, DeleteView):
     model = Teacher
     template_name = 'teachers_delete.html'
     form_class = TeacherDeleteForm
+    login_url = reverse_lazy('login')
 
     def get_success_url(self):
         return reverse('teachers:list')
